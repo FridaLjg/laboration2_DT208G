@@ -4,22 +4,21 @@ interface Todo {
     priority: number;
 }
 
-class TodoList implements Todo {
-    task: string;
-    completed: boolean;
-    priority: number;
+class TodoList {
+    todos: Todo[] = []
 
-    constructor(task: string, completed: boolean, priority: number) {
-        this.task = task;
-        this.completed = completed;
-        this.priority = priority;
-    }
+    addTodo(task: string, priority: number): boolean {
+        if(task.trim().length === 0) {
+            return false;
+        }
 
-    test(): void {
-        console.log(`Test om vi kan se ${this.task} och ${this.completed} samt ${this.priority}`);
+    this.todos.push({
+        task,
+        completed: false,
+        priority,
+    })
+
+    return true;
     }
 }
 
-const t = new TodoList("Handla mat", true, 2);
-
-t.test();
