@@ -7,6 +7,7 @@ interface Todo {
 class TodoList {
     todos: Todo[] = []
 
+    //Metod som lägger till nya "todos"
     addTodo(task: string, priority: number): boolean {
         if(task.trim().length === 0) {
             return false;
@@ -19,6 +20,13 @@ class TodoList {
     })
 
     return true;
+    }
+
+    //Metod som markerar todos som klara
+    markTodoCompleted(todoIndex: number): void {
+        if (this.todos[todoIndex]) {
+            this.todos[todoIndex].completed = true;
+        }
     }
 }
 
