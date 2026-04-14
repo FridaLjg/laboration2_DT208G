@@ -51,7 +51,7 @@ class TodoList {
         return this.todos;
     }
 
-    //Metod somn sparar todos till localStorage
+    //Metod som sparar todos till localStorage
     saveToLocalStorage(): void {
         localStorage.setItem(
             this.storageKey,

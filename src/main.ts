@@ -3,7 +3,31 @@ import './classes.ts'
 
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
+<div class=container>
+<h1>Kurser</h1>
 
+<table>
+  <thead id="table-heading">
+    <tr>
+      <th>Uppgift</th>
+      <th>Färdig?</th>
+      <th>Prioritet</th>
+    </tr>
+  </thead>
+
+  <tbody id="todo-list"></tbody>
+</table>
+
+<h2>Lägg till kurs</h2>
+
+  <form id="todo-form">
+    <label for="task">Uppgift</label>
+    <input id="task" placeholder="Handla..." required /><br>
+    <label for="priority">Prioritet</label>
+    <input id="priority" placeholder="1, 2, 3, 4, 5?" required /><br>
+    <button type="submit">Lägg till uppgift</button>
+  </form>
+</div>
 `
 
 
