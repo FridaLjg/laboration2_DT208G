@@ -1,5 +1,6 @@
 import './style.css'
 import './classes.ts'
+import { TodoList } from './classes.ts';
 
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
@@ -18,7 +19,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <tbody id="todo-list"></tbody>
 </table>
 
-<h2>Lägg till kurs</h2>
+<h2>Lägg till Uppgift</h2>
 
   <form id="todo-form">
     <label for="task">Uppgift</label>
@@ -29,5 +30,8 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   </form>
 </div>
 `
+
+const todoList = new TodoList();
+
 
 

@@ -1,10 +1,10 @@
-interface Todo {
+export interface Todo {
     task: string;
     completed: boolean;
     priority: number;
 }
 
-class TodoList {
+export class TodoList {
     todos: Todo[] = [];
 
     //Ladda sparade todos från localStorage
@@ -12,13 +12,12 @@ class TodoList {
 
     constructor(storageKey = "todos") {
         this.storageKey = storageKey;
-        this.todos = [];
         this.loadFromLocalStorage();
     }
 
     loadFromLocalStorage(): void {
         const storedItems = localStorage.getItem(this.storageKey);
-        
+
         if (storedItems) {
             this.todos = JSON.parse(storedItems);
         }
@@ -30,12 +29,17 @@ class TodoList {
             return false;
         }
 
+        if (priority < 1 || priority > 5) {
+            return false;
+        }
+
         this.todos.push({
             task,
             completed: false,
             priority,
         })
 
+        this.saveToLocalStorage();
         return true;
     }
 
@@ -43,6 +47,7 @@ class TodoList {
     markTodoCompleted(todoIndex: number): void {
         if (this.todos[todoIndex]) {
             this.todos[todoIndex].completed = true;
+            this.saveToLocalStorage();
         }
     }
 
