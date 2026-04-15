@@ -39,6 +39,18 @@ const form = document.querySelector<HTMLFormElement>('#todo-form')!;
 const taskInput = document.querySelector<HTMLInputElement>('#task')!;
 const priorityInput = document.querySelector<HTMLInputElement>('#priority')!;
 const errormessage = document.querySelector<HTMLDivElement>('#error')!;
+const todoTable = document.querySelector<HTMLTableSectionElement>('#todo-list')
+
+todoList.getTodos().forEach((todo, index) => {
+  const row = document.createElement('tr');
+  row.innerHTML = `
+    <td>${todo.task}</td>
+    <td><input type="checkbox" ${todo.completed ? 'checkedd' : ''} data-index="${index}"/></td>
+    <td>${todo.priority}</td>
+    `;
+
+    todoTable?.appendChild(row);
+})
 
 //Händelselyssnare
 form.addEventListener('submit', (e) => {
