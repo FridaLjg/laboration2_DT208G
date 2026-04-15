@@ -13,6 +13,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <th>Uppgift</th>
       <th>Färdig?</th>
       <th>Prioritet</th>
+      <th>Ta bort</th>
     </tr>
   </thead>
 
@@ -47,9 +48,18 @@ todoList.getTodos().forEach((todo, index) => {
     <td>${todo.task}</td>
     <td><input type="checkbox" ${todo.completed ? 'checkedd' : ''} data-index="${index}"/></td>
     <td>${todo.priority}</td>
+    <td><button class="delete-button">Radera</button></td>
     `;
 
-    todoTable?.appendChild(row);
+  //Raderaknapp
+  const deleteButton = row.querySelector<HTMLButtonElement>('.delete-button');
+
+  deleteButton?.addEventListener('click', () => {
+    todoList.removeTodo(index);
+    row.remove();              
+  });
+
+  todoTable?.appendChild(row);
 })
 
 //Händelselyssnare

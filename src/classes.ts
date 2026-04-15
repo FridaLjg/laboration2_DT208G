@@ -64,5 +64,10 @@ export class TodoList {
         );
     }
 
+    //Raderar todo
+    removeTodo(index: number): void {
+        this.todos.splice(index, 1);
+        this.saveToLocalStorage();
+    }
 }
 
