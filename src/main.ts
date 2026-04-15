@@ -23,13 +23,13 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
   <form id="todo-form">
     <label for="task">Uppgift</label>
-    <input id="task" placeholder="Handla..." required /><br>
+    <input id="task" placeholder="Handla..."/><br>
     <label for="priority">Prioritet</label>
-    <input id="priority" placeholder="1, 2, 3, 4, 5?" required /><br>
+    <input id="priority" placeholder="1, 2, 3, 4, 5?"/><br>
     <button type="submit">Lägg till uppgift</button>
+    <br>
+    <div id="error"></div>
   </form>
-
-  <div id=error></div>
 </div>
 `
 
@@ -38,16 +38,20 @@ const todoList = new TodoList();
 const form = document.querySelector<HTMLFormElement>('#todo-form')!;
 const taskInput = document.querySelector<HTMLInputElement>('#task')!;
 const priorityInput = document.querySelector<HTMLInputElement>('#priority')!;
+const errormessage = document.querySelector<HTMLDivElement>('#error')!;
 
 //Händelselyssnare
 form.addEventListener('submit', (e) => {
   e.preventDefault();
 
-  const task = taskInput.value;
-  const priority = Number(priorityInput.value);
+  const task: string = taskInput.value;
+  const priority: number = Number(priorityInput.value);
 
-  console.log('Uppgift:', task);
-  console.log('Prioritet:', priority);
+  const success = todoList.addTodo(task, priority);
+  if (success === false) {
+    errormessage.textContent = 'Du måste fylla i alla textfält!';
+    return;
+  }
 });
 
 
