@@ -1,7 +1,6 @@
 import './style.css'
-import './classes.ts'
 import { TodoList } from './classes.ts';
-
+import type { Todo } from './classes.ts';
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 <div class=container>
@@ -44,14 +43,21 @@ const taskerror = document.querySelector<HTMLDivElement>('#task-error')!;
 const priorityerror = document.querySelector<HTMLDivElement>('#priority-error')!;
 const todoTable = document.querySelector<HTMLTableSectionElement>('#todo-list')
 
-todoList.getTodos().forEach((todo, index) => {
+function createTodoRow(todo: Todo, index: number): void {
   const row = document.createElement('tr');
   row.innerHTML = `
     <td>${todo.task}</td>
-    <td><input type="checkbox" ${todo.completed ? 'checked' : ''} data-index="${index}"/></td>
+    <td><input type="checkbox" ${todo.completed ? 'checked' : ''}></td>
     <td>${todo.priority}</td>
     <td><button class="delete-button">Radera</button></td>
     `;
+
+  //Markera som klar
+  const checkbox = row.querySelector<HTMLInputElement>('input[type="checkbox"]');
+
+  checkbox?.addEventListener('change', () => {
+    todoList.markTodoCompleted(index);
+  });
 
   //Raderaknapp
   const deleteButton = row.querySelector<HTMLButtonElement>('.delete-button');
@@ -62,7 +68,12 @@ todoList.getTodos().forEach((todo, index) => {
   });
 
   todoTable?.appendChild(row);
-})
+}
+
+todoList.getTodos().forEach((todo, index) => {
+  createTodoRow(todo, index);
+});
+
 
 //Händelselyssnare
 form.addEventListener('submit', (e) => {
@@ -90,9 +101,12 @@ form.addEventListener('submit', (e) => {
 
   todoList.addTodo(task, priority);
 
+  const index = todoList.getTodos().length - 1;
+  const newTodo = todoList.getTodos()[index];
+
+  createTodoRow(newTodo, index);
+
+  //Rensa formulär
   taskInput.value = '';
   priorityInput.value = '';
 });
-
-
-

@@ -46,7 +46,8 @@ export class TodoList {
     //Metod som markerar todos som klara
     markTodoCompleted(todoIndex: number): void {
         if (this.todos[todoIndex]) {
-            this.todos[todoIndex].completed = true;
+            this.todos[todoIndex].completed =
+                !this.todos[todoIndex].completed;
             this.saveToLocalStorage();
         }
     }
