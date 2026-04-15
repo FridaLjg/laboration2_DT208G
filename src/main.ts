@@ -26,7 +26,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <input id="task" placeholder="Handla..."/><br>
     <div id="task-error" class="error"></div><br>
     <label for="priority">Prioritet</label>
-    <input id="priority" placeholder="1, 2, 3, 4, 5"/><br>
+    <input id="priority" placeholder="1, 2, 3"/><br>
     <div id="priority-error" class="error"></div><br>
     <button type="submit">Lägg till uppgift</button>
     <br>
@@ -41,9 +41,10 @@ const taskInput = document.querySelector<HTMLInputElement>('#task')!;
 const priorityInput = document.querySelector<HTMLInputElement>('#priority')!;
 const taskerror = document.querySelector<HTMLDivElement>('#task-error')!;
 const priorityerror = document.querySelector<HTMLDivElement>('#priority-error')!;
-const todoTable = document.querySelector<HTMLTableSectionElement>('#todo-list')
+const todoTable = document.querySelector<HTMLTableSectionElement>('#todo-list')!;
 
-function createTodoRow(todo: Todo, index: number): void {
+//Funktion som skapar en rad i tabellen
+function createTodoRow(todo: Todo, index: number): HTMLTableRowElement {
   const row = document.createElement('tr');
   row.innerHTML = `
     <td>${todo.task}</td>
@@ -67,13 +68,26 @@ function createTodoRow(todo: Todo, index: number): void {
     row.remove();
   });
 
-  todoTable?.appendChild(row);
+  return row;
 }
 
-todoList.getTodos().forEach((todo, index) => {
-  createTodoRow(todo, index);
-});
+//Funktion som sorterar efter prioritet
+function showTodosSortedByPriority(): void {
+  todoTable.innerHTML = '';
 
+  //Sortera efter prioritet
+  const sortedTodos = [...todoList.getTodos()].sort(
+    (a, b) => a.priority - b.priority
+  );
+
+  sortedTodos.forEach((todo, index) => {
+    const row = createTodoRow(todo, index);
+    todoTable.appendChild(row);
+  });
+}
+
+//Visa tabell när sidan laddas
+showTodosSortedByPriority();
 
 //Händelselyssnare
 form.addEventListener('submit', (e) => {
@@ -89,9 +103,9 @@ form.addEventListener('submit', (e) => {
     taskerror.textContent = 'Du måste skriva en uppgift.';
   }
 
-  if (priority < 1 || priority > 5) {
+  if (priority < 1 || priority > 3) {
     priorityerror.textContent =
-      'Prioritet måste vara mellan 1 och 5.';
+      'Prioritet måste vara mellan 1 och 3.';
     return;
   }
 
@@ -100,11 +114,7 @@ form.addEventListener('submit', (e) => {
   }
 
   todoList.addTodo(task, priority);
-
-  const index = todoList.getTodos().length - 1;
-  const newTodo = todoList.getTodos()[index];
-
-  createTodoRow(newTodo, index);
+  showTodosSortedByPriority();
 
   //Rensa formulär
   taskInput.value = '';

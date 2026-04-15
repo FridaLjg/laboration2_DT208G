@@ -29,7 +29,7 @@ export class TodoList {
             return false;
         }
 
-        if (priority < 1 || priority > 5) {
+        if (priority < 1 || priority > 3) {
             return false;
         }
 
