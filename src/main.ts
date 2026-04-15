@@ -25,11 +25,12 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <form id="todo-form">
     <label for="task">Uppgift</label>
     <input id="task" placeholder="Handla..."/><br>
+    <div id="task-error" class="error"></div><br>
     <label for="priority">Prioritet</label>
-    <input id="priority" placeholder="1, 2, 3, 4, 5?"/><br>
+    <input id="priority" placeholder="1, 2, 3, 4, 5"/><br>
+    <div id="priority-error" class="error"></div><br>
     <button type="submit">Lägg till uppgift</button>
     <br>
-    <div id="error"></div>
   </form>
 </div>
 `
@@ -39,14 +40,15 @@ const todoList = new TodoList();
 const form = document.querySelector<HTMLFormElement>('#todo-form')!;
 const taskInput = document.querySelector<HTMLInputElement>('#task')!;
 const priorityInput = document.querySelector<HTMLInputElement>('#priority')!;
-const errormessage = document.querySelector<HTMLDivElement>('#error')!;
+const taskerror = document.querySelector<HTMLDivElement>('#task-error')!;
+const priorityerror = document.querySelector<HTMLDivElement>('#priority-error')!;
 const todoTable = document.querySelector<HTMLTableSectionElement>('#todo-list')
 
 todoList.getTodos().forEach((todo, index) => {
   const row = document.createElement('tr');
   row.innerHTML = `
     <td>${todo.task}</td>
-    <td><input type="checkbox" ${todo.completed ? 'checkedd' : ''} data-index="${index}"/></td>
+    <td><input type="checkbox" ${todo.completed ? 'checked' : ''} data-index="${index}"/></td>
     <td>${todo.priority}</td>
     <td><button class="delete-button">Radera</button></td>
     `;
@@ -56,7 +58,7 @@ todoList.getTodos().forEach((todo, index) => {
 
   deleteButton?.addEventListener('click', () => {
     todoList.removeTodo(index);
-    row.remove();              
+    row.remove();
   });
 
   todoTable?.appendChild(row);
@@ -69,11 +71,27 @@ form.addEventListener('submit', (e) => {
   const task: string = taskInput.value;
   const priority: number = Number(priorityInput.value);
 
-  const success = todoList.addTodo(task, priority);
-  if (success === false) {
-    errormessage.textContent = 'Du måste fylla i alla textfält!';
+  taskerror.textContent = '';
+  priorityerror.textContent = '';
+
+  if (task.trim().length === 0) {
+    taskerror.textContent = 'Du måste skriva en uppgift.';
+  }
+
+  if (priority < 1 || priority > 5) {
+    priorityerror.textContent =
+      'Prioritet måste vara mellan 1 och 5.';
     return;
   }
+
+  if (taskerror.textContent !== '' || priorityerror.textContent !== '') {
+    return;
+  }
+
+  todoList.addTodo(task, priority);
+
+  taskInput.value = '';
+  priorityInput.value = '';
 });
 
 

@@ -27,6 +27,10 @@ table {
   margin-bottom: 2rem;
 }
 
+.error {
+  color: red;
+}
+
 #table-heading {
   font-size: 1.2rem;
   text-align: center;
