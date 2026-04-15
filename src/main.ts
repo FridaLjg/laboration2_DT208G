@@ -5,7 +5,7 @@ import { TodoList } from './classes.ts';
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 <div class=container>
-<h1>Kurser</h1>
+<h1>Att göra</h1>
 
 <table>
   <thead id="table-heading">
@@ -28,10 +28,27 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <input id="priority" placeholder="1, 2, 3, 4, 5?" required /><br>
     <button type="submit">Lägg till uppgift</button>
   </form>
+
+  <div id=error></div>
 </div>
 `
 
 const todoList = new TodoList();
+
+const form = document.querySelector<HTMLFormElement>('#todo-form')!;
+const taskInput = document.querySelector<HTMLInputElement>('#task')!;
+const priorityInput = document.querySelector<HTMLInputElement>('#priority')!;
+
+//Händelselyssnare
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const task = taskInput.value;
+  const priority = Number(priorityInput.value);
+
+  console.log('Uppgift:', task);
+  console.log('Prioritet:', priority);
+});
 
 
 
