@@ -80,8 +80,9 @@ function showTodosSortedByPriority(): void {
     (a, b) => a.priority - b.priority
   );
 
-  sortedTodos.forEach((todo, index) => {
-    const row = createTodoRow(todo, index);
+  sortedTodos.forEach((todo) => {
+    const realIndex = todoList.getTodos().indexOf(todo);
+    const row = createTodoRow(todo, realIndex);
     todoTable.appendChild(row);
   });
 }
