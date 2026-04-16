@@ -9,4 +9,4 @@ Interfacet ”Todo” och klassen ”TodoList” exporteras till filen main.ts. 
 Av: Frida Ljungberg, 2026
 
 ### Länk till webbplats
-https://laboration1dt208g.netlify.app/
+https://laboration2dt208g.netlify.app/
