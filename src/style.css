@@ -39,6 +39,7 @@ label {
 #table-heading {
   font-size: 1.2rem;
   text-align: center;
+  background-color: beige;
 }
 
 th,
@@ -55,7 +56,7 @@ form {
   max-width: 30rem;
   border: 2px solid;
   padding: 2rem;
-  background-color: rgb(238, 238, 195);
+  background-color: beige;
 }
 
 input {
